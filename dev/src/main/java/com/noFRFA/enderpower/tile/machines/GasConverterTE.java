@@ -141,7 +141,7 @@ public class GasConverterTE extends TileEntityElectricMachine implements IHasGui
 	}
 
 	public int getPercent() {
-		return Math.round(this.progress / this.MAX_PROGRESS * 100F);
+		return Math.round(this.progress / Math.max(1200, this.MAX_PROGRESS) * 100F);
 	}
 
 	@Override
