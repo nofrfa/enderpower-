@@ -14,19 +14,19 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class MachinesUpgradeVolecy extends Item {
-    public MachinesUpgradeVolecy(String name, int setMaxStack, CreativeTabs setTab) {
-        this.setRegistryName(name);
-        this.setUnlocalizedName(name);
-        this.setCreativeTab(setTab);
-        this.setMaxStackSize(setMaxStack);
-    }
+	public MachinesUpgradeVolecy(String name, int setMaxStack, CreativeTabs setTab) {
+		this.setRegistryName(name);
+		this.setUnlocalizedName(name);
+		this.setCreativeTab(setTab);
+		this.setMaxStackSize(setMaxStack);
+	}
 
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        int deBoostTime = stack.getCount() * EnderPower.Upgrader_volecy;
-        int boostMilibackets = stack.getCount() * EnderPower.Upgrader_volecy_boost;
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		int deBoostTime = stack.getCount() * EnderPower.Upgrader_volecy;
+		int boostMilibackets = stack.getCount() * EnderPower.Upgrader_volecy_boost;
 
-        tooltip.add(I18n.format("upgrade.volecy") + " " + deBoostTime + " " + I18n.format("more.sec"));
-        tooltip.add(I18n.format("upgrade.volecy2") + " " + boostMilibackets + " " + I18n.format("more.mb_out"));
-    }
+		tooltip.add(I18n.format("upgrade.volecy") + " " + deBoostTime + " " + I18n.format("more.sec"));
+		tooltip.add(I18n.format("upgrade.volecy2") + " " + boostMilibackets + " " + I18n.format("more.mb_out"));
+	}
 }

@@ -14,20 +14,20 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ProjectileHolder extends Item {
-    public ProjectileHolder(String name, int setMaxStack, CreativeTabs setTab) {
-        this.setRegistryName(name);
-        this.setUnlocalizedName(name);
-        this.setCreativeTab(setTab);
-        this.setMaxStackSize(setMaxStack);
-    }
+	public ProjectileHolder(String name, int setMaxStack, CreativeTabs setTab) {
+		this.setRegistryName(name);
+		this.setUnlocalizedName(name);
+		this.setCreativeTab(setTab);
+		this.setMaxStackSize(setMaxStack);
+	}
 
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        if(GuiScreen.isShiftKeyDown()){
-            tooltip.add(I18n.format("projectileHolder.information.line1"));
-            tooltip.add(I18n.format("projectileHolder.information.line2"));
-        } else {
-            tooltip.add(I18n.format("projectileHolder.shift"));
-        }
-    }
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		if (GuiScreen.isShiftKeyDown()) {
+			tooltip.add(I18n.format("projectileHolder.information.line1"));
+			tooltip.add(I18n.format("projectileHolder.information.line2"));
+		} else {
+			tooltip.add(I18n.format("projectileHolder.shift"));
+		}
+	}
 }

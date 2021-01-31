@@ -27,162 +27,156 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 
-import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NotClassic
 public class GasConverterTE extends TileEntityElectricMachine implements IHasGui, IWrenchable {
 
-    protected Redstone redstone;
-    public final InvSlotConsumableItemStack inputContainer;
-    public final InvSlotOutput outputFluidSlot;
-    public final InvSlotConsumableLiquid inputFluidSlot;
-    public final InvSlotConsumableItemStack customUpgradeSlot1;
-    public final InvSlotConsumableItemStack customUpgradeSlot2;
-    public final InvSlotOutput outputContainer;
-    public final FluidTank fluidTank;
-    protected final Fluids fluids;
+	public final InvSlotConsumableItemStack inputContainer;
+	public final InvSlotOutput outputFluidSlot;
+	public final InvSlotConsumableLiquid inputFluidSlot;
+	public final InvSlotConsumableItemStack customUpgradeSlot1;
+	public final InvSlotConsumableItemStack customUpgradeSlot2;
+	public final InvSlotOutput outputContainer;
+	public final FluidTank fluidTank;
+	protected final Fluids fluids;
+	public int fixGuiPart;
+	public int guiProgress;
+	public float MAX_PROGRESS;
+	protected Redstone redstone;
+	private float progress;
 
-    public int fixGuiPart;
-    public int guiProgress;
+	public GasConverterTE() {
+		super(4096, 4);
+		this.guiProgress = 0;
+		this.redstone = this.addComponent(new Redstone(this));
+		this.redstone.subscribe(i -> GasConverterTE.this.setActive(i <= 0));
 
-    public double MAX_PROGRESS;
-    private double progress;
+		NBTTagCompound nbttt = new NBTTagCompound();
+		nbttt.setString("inside", "shulker_projectile");
 
-    public GasConverterTE() {
-        super(4096, 4);
-        this.guiProgress = 0;
-        this.redstone = (Redstone) this.addComponent(new Redstone(this));
-        this.redstone.subscribe(new Redstone.IRedstoneChangeHandler() {
-            public void onRedstoneChange(int i) {
-                GasConverterTE.this.setActive(i <= 0);
-            }
-        });
+		ItemStack AcceptItem = new ItemStack(ItemsRegistry.ITEM_projectile_holder_filled);
+		AcceptItem.setTagCompound(nbttt);
 
-        NBTTagCompound nbttt = new NBTTagCompound();
-        nbttt.setString("inside", "shulker_projectile");
+		this.inputContainer = new InvSlotConsumableItemStack(this, "container", 1, AcceptItem);
+		this.outputContainer = new InvSlotOutput(this, "output", 1);
+		this.outputFluidSlot = new InvSlotOutput(this, "output_fluid", 1);
+		this.inputFluidSlot = new InvSlotConsumableLiquidByList(this, "container_fluid", InvSlot.Access.I, 1, InvSlot.InvSide.TOP, InvSlotConsumableLiquid.OpType.Fill, FluidsRegister.GAS_ERBI);
+		this.fluids = (Fluids) addComponent((TileEntityComponent) new Fluids(this));
+		this.fluidTank = this.fluids.addTank("fluidTank", 10000, Fluids.fluidPredicate(FluidsRegister.GAS_ERBI));
+		this.customUpgradeSlot1 = new InvSlotConsumableItemStack(this, "cupslot1", 1, new ItemStack(ItemsRegistry.UPGRADE_speed));
+		this.customUpgradeSlot2 = new InvSlotConsumableItemStack(this, "cupslot2", 1, new ItemStack(ItemsRegistry.UPGRADE_Volecy));
+	}
 
-        ItemStack AcceptItem = new ItemStack(ItemsRegistry.ITEM_projectile_holder_filled);
-        AcceptItem.setTagCompound(nbttt);
+	public void readFromNBT(NBTTagCompound nbt) {
+		super.readFromNBT(nbt);
+		this.progress = nbt.getInteger("progress");
+	}
 
-        this.inputContainer = new InvSlotConsumableItemStack(this, "container", 1, AcceptItem);
-        this.outputContainer = new InvSlotOutput(this, "output", 1);
-        this.outputFluidSlot = new InvSlotOutput(this, "output_fluid", 1);
-        this.inputFluidSlot = new InvSlotConsumableLiquidByList(this, "container_fluid", InvSlot.Access.I, 1, InvSlot.InvSide.TOP, InvSlotConsumableLiquid.OpType.Fill, FluidsRegister.GAS_ERBI);
-        this.fluids = (Fluids) addComponent((TileEntityComponent) new Fluids(this));
-        this.fluidTank = this.fluids.addTank("fluidTank", 10000, Fluids.fluidPredicate(FluidsRegister.GAS_ERBI));
-        this.customUpgradeSlot1 = new InvSlotConsumableItemStack(this, "cupslot1", 1, new ItemStack(ItemsRegistry.UPGRADE_speed));
-        this.customUpgradeSlot2 = new InvSlotConsumableItemStack(this, "cupslot2", 1, new ItemStack(ItemsRegistry.UPGRADE_Volecy));
-    }
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+		super.writeToNBT(nbt);
+		nbt.setInteger("progress", getPercent());
+		return nbt;
+	}
 
-    public void readFromNBT(NBTTagCompound nbt) {
-        super.readFromNBT(nbt);
-        this.progress = nbt.getInteger("progress");
-    }
+	public void onPlaced(ItemStack stack, EntityLivingBase placer, EnumFacing facing) {
+		super.onPlaced(stack, placer, facing);
+		if (!this.world.isRemote) {
+			this.setActive(true);
+		}
+	}
 
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-        super.writeToNBT(nbt);
-        nbt.setInteger("progress", getProcent());
-        return nbt;
-    }
+	protected void updateEntityServer() {
+		super.updateEntityServer();
 
-    public void onPlaced(ItemStack stack, EntityLivingBase placer, EnumFacing facing) {
-        super.onPlaced(stack, placer, facing);
-        if (!this.world.isRemote) {
-            this.setActive(true);
-        }
-    }
+		System.out.println(getPercent());
 
-    protected void updateEntityServer() {
-        super.updateEntityServer();
+		boolean active = this.getActive();
+		float count_speed_boost = this.customUpgradeSlot1.get().getCount() * EnderPower.Upgrader_speed_boost;
+		int count_speed_energy = this.customUpgradeSlot1.get().getCount() * EnderPower.Upgrader_speed_energy;
+		int count_volecy_boost = this.customUpgradeSlot2.get().getCount() * EnderPower.Upgrader_volecy_boost;
+		float count_volecy_time = this.customUpgradeSlot2.get().getCount() * EnderPower.Upgrader_volecy_time;
+		int gas_output = 250 + count_volecy_boost;
 
-        System.out.println(getProcent());
+		if (this.inputContainer.isEmpty()) {
+			this.progress = 0;
+		}
 
-        boolean active = this.getActive();
-        double count_speed_boost = this.customUpgradeSlot1.get().getCount() * EnderPower.Upgrader_speed_boost;
-        int count_speed_energy = this.customUpgradeSlot1.get().getCount() * EnderPower.Upgrader_speed_energy;
-        int count_volecy_boost = this.customUpgradeSlot2.get().getCount() * EnderPower.Upgrader_volecy_boost;
-        double count_volecy_time = this.customUpgradeSlot2.get().getCount() * EnderPower.Upgrader_volecy_time;
-        int gas_output = 250 + count_volecy_boost;
+		this.MAX_PROGRESS = 1200 + count_volecy_time;
 
-        if(this.inputContainer.isEmpty()) {
-            this.progress = 0;
-        }
+		if (this.progress >= this.MAX_PROGRESS) {
+			this.hasOperate(gas_output);
+			this.progress -= this.MAX_PROGRESS;
+			active = false;
+		}
 
-        this.MAX_PROGRESS = 1200 + count_volecy_time;
+		if (!this.inputFluidSlot.isEmpty()) this.inputFluidSlot.processFromTank(this.fluidTank, this.outputFluidSlot);
 
-        if(this.progress >= this.MAX_PROGRESS) {
-            this.hasOperate(gas_output);
-            this.progress -= this.MAX_PROGRESS;
-            active = false;
-        }
+		if (active && canOperate() && 256 + count_speed_energy <= this.energy.getEnergy()) {
+			this.progress += 1 + count_speed_boost;
+			this.energy.useEnergy(256 + count_speed_energy);
+			this.fixGuiPart = getPercent();
+		}
+	}
 
-        if(!this.inputFluidSlot.isEmpty()) this.inputFluidSlot.processFromTank(this.fluidTank, this.outputFluidSlot);
+	private void hasOperate(int gas_output) {
+		this.inputContainer.consume(1);
+		this.outputContainer.add(new ItemStack(ItemsRegistry.ITEM_projectile_holder));
+		this.fluidTank.fillInternal(new FluidStack(FluidsRegister.GAS_ERBI, gas_output), true);
+	}
 
-        if(active && canOperate() && 256 + count_speed_energy <= this.energy.getEnergy()) {
-            this.progress += 1 + count_speed_boost;
-            this.energy.useEnergy(256 + count_speed_energy);
-            this.fixGuiPart = getProcent();
-        }
-    }
+	private boolean canOperate() {
+		return this.outputContainer.isEmpty() && !this.inputContainer.isEmpty() && this.fluidTank.getFluidAmount() + 1 < this.fluidTank.getCapacity();
+	}
 
-    private void hasOperate(int gas_output) {
-        this.inputContainer.consume(1);
-        this.outputContainer.add(new ItemStack(ItemsRegistry.ITEM_projectile_holder));
-        this.fluidTank.fillInternal(new FluidStack(FluidsRegister.GAS_ERBI, gas_output), true);
-    }
+	@Override
+	public ContainerBase<?> getGuiContainer(EntityPlayer entityPlayer) {
+		return new ContainerGas(entityPlayer, this);
+	}
 
-    private boolean canOperate() {
-        return this.outputContainer.isEmpty() && !this.inputContainer.isEmpty() && this.fluidTank.getFluidAmount() + 1 < this.fluidTank.getCapacity();
-    }
+	@Override
+	public GuiScreen getGui(EntityPlayer entityPlayer, boolean b) {
+		return new GuiGas(new ContainerGas(entityPlayer, this));
+	}
 
-    @Override
-    public ContainerBase<?> getGuiContainer(EntityPlayer entityPlayer) {
-        return new ContainerGas(entityPlayer, this);
-    }
+	public int getPercent() {
+		return Math.round(this.progress / this.MAX_PROGRESS * 100F);
+	}
 
-    @Override
-    public GuiScreen getGui(EntityPlayer entityPlayer, boolean b) {
-        return new GuiGas(new ContainerGas(entityPlayer, this));
-    }
+	@Override
+	public void onGuiClosed(EntityPlayer entityPlayer) {
+	}
 
-    public int getProcent() {
-        return (int) (this.progress / this.MAX_PROGRESS * 100);
-    }
+	@Override
+	public EnumFacing getFacing(World world, BlockPos blockPos) {
+		return this.getFacing();
+	}
 
-    @Override
-    public void onGuiClosed(EntityPlayer entityPlayer) {
-    }
+	@Override
+	public boolean setFacing(World world, BlockPos blockPos, EnumFacing enumFacing, EntityPlayer entityPlayer) {
+		if (!this.canSetFacingWrench(enumFacing, entityPlayer)) {
+			return false;
+		} else {
+			this.setFacing(enumFacing);
+			return true;
+		}
+	}
 
-    @Override
-    public EnumFacing getFacing(World world, BlockPos blockPos) {
-        return this.getFacing();
-    }
+	@Override
+	public boolean wrenchCanRemove(World world, BlockPos blockPos, EntityPlayer entityPlayer) {
+		return true;
+	}
 
-    @Override
-    public boolean setFacing(World world, BlockPos blockPos, EnumFacing enumFacing, EntityPlayer entityPlayer) {
-        if (!this.canSetFacingWrench(enumFacing, entityPlayer)) {
-            return false;
-        } else {
-            this.setFacing(enumFacing);
-            return true;
-        }
-    }
+	@Override
+	public List<ItemStack> getWrenchDrops(World world, BlockPos blockPos, IBlockState iBlockState, TileEntity tileEntity, EntityPlayer entityPlayer, int i) {
+		List<ItemStack> list = new ArrayList<>();
+		inputContainer.forEach(list::add);
+		outputContainer.forEach(list::add);
+		inputFluidSlot.forEach(list::add);
+		outputFluidSlot.forEach(list::add);
+		customUpgradeSlot1.forEach(list::add);
 
-    @Override
-    public boolean wrenchCanRemove(World world, BlockPos blockPos, EntityPlayer entityPlayer) {
-        return true;
-    }
-
-    @Override
-    public List<ItemStack> getWrenchDrops(World world, BlockPos blockPos, IBlockState iBlockState, TileEntity tileEntity, EntityPlayer entityPlayer, int i) {
-        List<ItemStack> list = new ArrayList<>();
-        inputContainer.forEach(list::add);
-        outputContainer.forEach(list::add);
-        inputFluidSlot.forEach(list::add);
-        outputFluidSlot.forEach(list::add);
-        customUpgradeSlot1.forEach(list::add);
-
-        return list;
-    }
+		return list;
+	}
 }

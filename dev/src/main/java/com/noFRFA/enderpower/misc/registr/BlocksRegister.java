@@ -53,43 +53,40 @@ public class BlocksRegister {
     Примечание: Вы можете добавлять блоки точно так же, как и броню - через запятую
     */
 
-    public static Block
-            BLOCK_UltimateMachineCasing = new BlockList("ultimate_machine_casing", Material.IRON, 255, 10.0F, 100.0F, "pickaxe", 3, TabsList.EXtabs),
-            GAS_ERBI = new GasBlockErbi(FluidsRegister.GAS_ERBI)
+	public static Block
+			BLOCK_UltimateMachineCasing = new BlockList("ultimate_machine_casing", Material.IRON, 255, 10.0F, 100.0F, "pickaxe", 3, TabsList.EXtabs),
+			GAS_ERBI = new GasBlockErbi(FluidsRegister.GAS_ERBI);
 
 
-    ;
-
-
-    public static void register() {
+	public static void register() {
         /* [2]
         Добавляем
         setRegister(ВАШЕ_НАЗВАНИЕ_которое_писали_выше);
         Пример: setRegister(URANIUM_CHILD);
         */
-        setRegister(BLOCK_UltimateMachineCasing);
-        setRegister(GAS_ERBI);
-    }
+		setRegister(BLOCK_UltimateMachineCasing);
+		setRegister(GAS_ERBI);
+	}
 
-    @SideOnly(Side.CLIENT)
-    public static void registerRender() {
+	@SideOnly(Side.CLIENT)
+	public static void registerRender() {
         /* [3]
         Добавляем
         setRender(ВАШЕ_НАЗВАНИЕ_которое_писали_выше);
         Пример: setRender(URANIUM_CHILD);
         */
-        setRender(BLOCK_UltimateMachineCasing);
-        setRender(GAS_ERBI);
-    }
+		setRender(BLOCK_UltimateMachineCasing);
+		setRender(GAS_ERBI);
+	}
 
-    // ВСЁ ЧТО НИЖЕ - НЕ ТРОГАЕМ
-    private static void setRegister(Block block) {
-        ForgeRegistries.BLOCKS.register(block);
-        ForgeRegistries.ITEMS.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
-    }
+	// ВСЁ ЧТО НИЖЕ - НЕ ТРОГАЕМ
+	private static void setRegister(Block block) {
+		ForgeRegistries.BLOCKS.register(block);
+		ForgeRegistries.ITEMS.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
+	}
 
-    @SideOnly(Side.CLIENT)
-    private static void setRender(Block block) {
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
-    }
+	@SideOnly(Side.CLIENT)
+	private static void setRender(Block block) {
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
+	}
 }

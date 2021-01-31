@@ -1,15 +1,12 @@
 package com.noFRFA.enderpower.misc.events;
 
 import com.noFRFA.enderpower.misc.registr.ItemsRegistry;
-import ibxm.Player;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -40,35 +37,35 @@ public class EventsHandler {
     }
      */
 
-    @SubscribeEvent
-    public void playerInteract(PlayerInteractEvent.EntityInteractSpecific event) {
-        EntityPlayer player = event.getEntityPlayer();
-        Entity entity = event.getTarget();
-        World world = event.getWorld();
-        EnumHand handIs = event.getHand();
-        ItemStack itemIs = event.getItemStack();
+	@SubscribeEvent
+	public void playerInteract(PlayerInteractEvent.EntityInteractSpecific event) {
+		EntityPlayer player = event.getEntityPlayer();
+		Entity entity = event.getTarget();
+		World world = event.getWorld();
+		EnumHand handIs = event.getHand();
+		ItemStack itemIs = event.getItemStack();
 
-        NBTTagCompound inside = new NBTTagCompound();
-        inside.setString("inside", "shulker_projectile");
+		NBTTagCompound inside = new NBTTagCompound();
+		inside.setString("inside", "shulker_projectile");
 
-        if (!world.isRemote) {
-            if (
-                    handIs == EnumHand.MAIN_HAND
-                    && itemIs.getUnlocalizedName().equals("item.projectile_holder")
-                    && entity.getName().equals("entity.ShulkerBullet.name")
-            ) {
-                if(player.dimension != 1) {
-                    player.sendMessage(new TextComponentString(I18n.format("chatinfo.tag") + I18n.format("event.fail")));
-                } else {
-                    entity.setDead();
-                    itemIs.setCount(itemIs.getCount()-1);
+		if (!world.isRemote) {
+			if (
+					handIs == EnumHand.MAIN_HAND
+							&& itemIs.getUnlocalizedName().equals("item.projectile_holder")
+							&& entity.getName().equals("entity.ShulkerBullet.name")
+			) {
+				if (player.dimension != 1) {
+					player.sendMessage(new TextComponentString(I18n.format("chatinfo.tag") + I18n.format("event.fail")));
+				} else {
+					entity.setDead();
+					itemIs.setCount(itemIs.getCount() - 1);
 
-                    ItemStack finalItem = new ItemStack(ItemsRegistry.ITEM_projectile_holder_filled);
-                    finalItem.setTagCompound(inside);
+					ItemStack finalItem = new ItemStack(ItemsRegistry.ITEM_projectile_holder_filled);
+					finalItem.setTagCompound(inside);
 
-                    player.inventory.addItemStackToInventory(finalItem);
-                }
-            }
-        }
-    }
+					player.inventory.addItemStackToInventory(finalItem);
+				}
+			}
+		}
+	}
 }
