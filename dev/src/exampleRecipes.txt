@@ -1,0 +1,86 @@
+//ПРИМЕР "СТРОГО" КРАФТА
+//ПРИМЕР "СТРОГО" КРАФТА
+//ПРИМЕР "СТРОГО" КРАФТА
+{
+    "type": "crafting_shaped",
+    "pattern": [
+        "#CM",
+        "GEO",
+        "IBR"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:cookie"
+        },
+        "C": {
+            "item": "minecraft:cake"
+        },
+        "M": {
+            "item": "minecraft:melon_slice"
+        },
+        "G": {
+            "item": "minecraft:cooked_salmon"
+        },
+        "E": {
+            "item": "minecraft:emerald_ore"
+        },
+        "O": {
+            "item": "minecraft:cooked_cod"
+        },
+        "I": {
+            "item": "minecraft:mushroom_stew"
+        },
+        "B": {
+            "item": "minecraft:bread"
+        },
+        "R": {
+            "item": "minecraft:cooked_porkchop"
+        }
+    },
+    "item": "examplemod:coco",
+    "count": 1
+}
+
+========================================================================
+========================================================================
+========================================================================
+========================================================================
+========================================================================
+
+//ПРИМЕР "СВОБОДНОГО" КРАФТА
+//ПРИМЕР "СВОБОДНОГО" КРАФТА
+//ПРИМЕР "СВОБОДНОГО" КРАФТА
+{
+    "type": "crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "minecraft:cookie"
+        },
+        {
+            "item": "minecraft:cake"
+        },
+        {
+            "item": "minecraft:melon_slice"
+        },
+        {
+            "item": "minecraft:cooked_salmon"
+        },
+        {
+            "item": "minecraft:emerald_ore"
+        },
+        {
+            "item": "minecraft:cooked_cod"
+        },
+        {
+            "item": "minecraft:mushroom_stew"
+        },
+        {
+            "item": "minecraft:bread"
+        },
+        {
+            "item": "minecraft:cooked_porkchop"
+        }
+    ],
+    "item": "examplemod:coco",
+    "count": 1
+}

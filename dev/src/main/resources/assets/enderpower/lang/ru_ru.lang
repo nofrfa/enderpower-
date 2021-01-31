@@ -1,0 +1,71 @@
+itemGroup.examplemod=Ender Power
+
+tile.ultimate_machine_casing.name=§bУльтимативный корпус механизма
+enderpower.machines.gas_converter=Овератос
+
+item.neifrit_coil.name=Неифритовая катушка
+item.emptyshell.name=Пустая оболочка
+item.heatingrod.name=Нагревающий элемент
+item.ultimate_circuit.name=§bУльтимативная электросхема
+item.compressed_carbon_plate.name=Сжатый углепластик
+item.projectile_holder.name=§dСдерживатель
+item.projectile_holder_filled.name=§dСдерживатель (заполнен)
+item.inhibition_core.name=§dЯдро ингибирования
+
+item.heatsink_lvl.1.name=Теплоотвод (Уровень 1)
+item.heatsink_lvl.2.name=Теплоотвод (Уровень 2)
+item.heatsink_lvl.3.name=Теплоотвод (Уровень 3)
+item.heatsink_lvl.4.name=Теплоотвод (Уровень 4)
+item.heatsink_lvl.5.name=Теплоотвод (Уровень 5)
+item.heatsink_lvl.6.name=Теплоотвод (Уровень 6)
+item.heatsink_lvl.7.name=Теплоотвод (Уровень 7)
+
+item.spadiy.name=Слиток из спадия
+item.neifrit.name=Слиток из неифрита
+
+item.spadiy_powder.name=Смесь спадия
+item.steel_powder.name=Стальная пыль
+item.neifrit_powder.name=Смесь неифрита
+
+item.neifrit_plate.name=Неифритовая пластина
+item.spadiy_plate.name=Пластина из спадия
+
+item.neifrit_plate_dense.name=Сжатая неифритовая пластина
+item.spadiy_plate_dense.name=Сжатая спадиевая пластина
+
+item.neifrit_casing.name=Неифритовая оболочка
+
+item.powerconversion_module.name=Энергетический модуль
+
+item.upgrade_speed.name=§bУлучшение 'FastQ'
+item.upgrade_volecy.name=§bУлучшение 'Volecy'
+
+fluid.gas_erbi=Газ Эрби
+tile.null.name=Газ Эрби
+
+#Custom localization
+chatinfo.tag=§3[EnderPower] §r
+
+event.fail=Это действие может быть выполнено только в §5эндер мире
+
+more.eu_t=Eu/t
+more.sec=секунд
+more.mb_out=mb
+
+projectileHolder.shift=§8Подробности Shift
+projectileHolder.information.line1=§8Пкм по снаряду шалкера,
+projectileHolder.information.line2=§8чтобы заполнить
+projectileHolder_filled.information.line1=§8Внутри:
+projectileHolder_filled.inside_info=§8Снаряд Шалкера
+projectileHolder_filled.null_info=§8Пусто
+
+command.enderpower_give.success=Снаряд Шалкера был искусственно добавлен в §dСдерживатель
+command.enderpower_give.nbt.error=В §dСдерживателе§r уже что-то есть
+command.enderpower_give.detter.error=§dСдерживатель§r должен быть в ваших руках
+
+upgrade.speed=Уменьшает время работы на
+upgrade.speed2=Увеличивает потребление энергии на
+upgrade.volecy=Увеличивает время работы на
+upgrade.volecy2=Увеличивает выход газа на
+
+gas_converter.gui.progress=Прогресс
