@@ -43,9 +43,9 @@ public class GasConverterTE extends TileEntityElectricMachine implements IHasGui
 	protected final Fluids fluids;
 	public int fixGuiPart;
 	public int guiProgress;
-	public float MAX_PROGRESS;
+	public volatile float MAX_PROGRESS;
 	protected Redstone redstone;
-	private float progress;
+	private volatile float progress;
 
 	public GasConverterTE() {
 		super(4096, 4);
@@ -141,7 +141,7 @@ public class GasConverterTE extends TileEntityElectricMachine implements IHasGui
 	}
 
 	public int getPercent() {
-		return Math.round(this.progress / Math.max(1200, this.MAX_PROGRESS) * 100F);
+		return Math.round(this.progress / this.MAX_PROGRESS * 100F);
 	}
 
 	@Override
