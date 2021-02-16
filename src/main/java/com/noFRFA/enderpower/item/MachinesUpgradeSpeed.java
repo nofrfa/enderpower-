@@ -1,6 +1,7 @@
 package com.noFRFA.enderpower.item;
 
-import com.noFRFA.enderpower.EnderPower;
+import com.noFRFA.enderpower.misc.ConfigHalf;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
@@ -14,19 +15,19 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class MachinesUpgradeSpeed extends Item {
-	public MachinesUpgradeSpeed(String name, int setMaxStack, CreativeTabs setTab) {
-		this.setRegistryName(name);
-		this.setUnlocalizedName(name);
-		this.setCreativeTab(setTab);
-		this.setMaxStackSize(setMaxStack);
-	}
+    public MachinesUpgradeSpeed(String name, int setMaxStack, CreativeTabs setTab) {
+        this.setRegistryName(name);
+        this.setUnlocalizedName(name);
+        this.setCreativeTab(setTab);
+        this.setMaxStackSize(setMaxStack);
+    }
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		double boostSpeed = stack.getCount() * EnderPower.Upgrader_speed;
-		int boostEnergy = stack.getCount() * EnderPower.Upgrader_speed_energy;
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+        double boostSpeed = stack.getCount() * ConfigHalf.deligUpdatesInfo_speed_time;
+        int boostEnergy = stack.getCount() * ConfigHalf.deligUpdatesInfo_speed_energy;
 
-		tooltip.add(I18n.format("upgrade.speed") + " " + boostSpeed + " " + I18n.format("more.sec"));
-		tooltip.add(I18n.format("upgrade.speed2") + " " + boostEnergy + " " + I18n.format("more.eu_t"));
-	}
+        tooltip.add(I18n.format("upgrade.speed") + " " + boostSpeed + " " + I18n.format("more.sec"));
+        tooltip.add(I18n.format("upgrade.speed2") + " " + boostEnergy + " " + I18n.format("more.eu_t"));
+    }
 }

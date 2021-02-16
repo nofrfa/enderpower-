@@ -1,7 +1,7 @@
 itemGroup.examplemod=Ender Power
 
 tile.ultimate_machine_casing.name=§bUltimate Machine Casing
-enderpower.machines.gas_converter=Deligrous
+enderpower.machines.gas_converter=rework
 
 item.neifrit_coil.name=Neifrit Coil
 item.emptyshell.name=Empty Shell
@@ -37,8 +37,8 @@ item.neifrit_casing.name=Neifrit Casing
 
 item.powerconversion_module.name=Energy module
 
-item.upgrade_speed.name=§bUpgrade 'FastQ'
-item.upgrade_volecy.name=§bUpgrade 'Volecy'
+item.upgrade_speed.name=Upgrade 'FastQ'
+item.upgrade_volecy.name=Upgrade 'Volecy'
 
 fluid.gas_erbi=Gas Erbi
 tile.null.name=Gas Erbi
@@ -65,7 +65,7 @@ command.enderpower_give.detter.error=The §dDeterrent§r must be in your hands
 
 upgrade.speed=Reduces the running time by
 upgrade.speed2=Increases energy consumption by
-upgrade.volecy=Increases the working time by
+upgrade.volecy=Increases energy consumption by
 upgrade.volecy2=Increases the gas output by
 
 gas_converter.gui.progress=Progress

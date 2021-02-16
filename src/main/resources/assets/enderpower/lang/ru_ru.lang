@@ -1,7 +1,7 @@
 itemGroup.examplemod=Ender Power
 
 tile.ultimate_machine_casing.name=§bУльтимативный корпус механизма
-enderpower.machines.gas_converter=Овератос
+enderpower.machines.gas_converter=переделать
 
 item.neifrit_coil.name=Неифритовая катушка
 item.emptyshell.name=Пустая оболочка
@@ -37,8 +37,8 @@ item.neifrit_casing.name=Неифритовая оболочка
 
 item.powerconversion_module.name=Энергетический модуль
 
-item.upgrade_speed.name=§bУлучшение 'FastQ'
-item.upgrade_volecy.name=§bУлучшение 'Volecy'
+item.upgrade_speed.name=Улучшение 'FastQ'
+item.upgrade_volecy.name=Улучшение 'Volecy'
 
 fluid.gas_erbi=Газ Эрби
 tile.null.name=Газ Эрби
@@ -65,7 +65,7 @@ command.enderpower_give.detter.error=§dСдерживатель§r должен
 
 upgrade.speed=Уменьшает время работы на
 upgrade.speed2=Увеличивает потребление энергии на
-upgrade.volecy=Увеличивает время работы на
+upgrade.volecy=Увеличивает потребление энергии на
 upgrade.volecy2=Увеличивает выход газа на
 
 gas_converter.gui.progress=Прогресс

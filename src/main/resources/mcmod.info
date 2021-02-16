@@ -1,13 +1,11 @@
 [
-  {
-    "modid": "enderpower",
-    "name": "Ender Power",
-    "description": "Soon...",
-    "version": "1.0.0",
-    "mcversion": "1.12.2",
-    "authorList": [
-      "no_FRFA, Ru51kXD"
-    ],
-    "credits": "SuperSolarPanelsRemasted"
-  }
+{
+  "modid": "enderpower",
+  "name": "Ender Power",
+  "description": "Soon...",
+  "version": "1.0.0",
+  "mcversion": "1.12.2",
+  "authorList": ["no_FRFA, Ru51kXD"],
+  "credits": "SuperSolarPanelsRemasted"
+}
 ]
